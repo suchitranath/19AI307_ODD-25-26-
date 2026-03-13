@@ -17,8 +17,8 @@ To write and execute a basic Java program that prints a message using the `Syste
 ```
 /*
 Program to implement variables and Operators using Java
-Developed by: P SAKTHIVEL 
-RegisterNumber: 212223060238
+Developed by: SUCHITRA NATH
+RegisterNumber: 212223220112
 */
 ```
 
@@ -36,4 +36,5 @@ public class Main{
 
 ## RESULT:
 Thus, the Java program to print the message using the output statement is executed successfully.
+
 
