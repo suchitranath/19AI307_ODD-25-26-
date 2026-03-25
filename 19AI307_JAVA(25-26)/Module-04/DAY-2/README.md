@@ -1,49 +1,51 @@
-# Ex.No:4(C)  COMPOSITION IN JAVA
+# Ex.No:4(B)  IMPLEMENT SOLID PRINCIPLES IN JAVA PROGRAM 
 
 ## QUESTION:
-Implement a system where a Library contains multiple Book objects.
-Each Book must be created inside the Library, meaning a Book cannot exist 
-without the Library (Composition in OOP).
+In a gaming lounge, there is only one master console power switch that controls
+all gaming consoles. Whenever a player turns on any console, it internally triggers
+the master power. The master switch must ensure only one instance is ever created
+to prevent power fluctuations, hence it must follow the Singleton pattern.
 
-Input:
+Every time a player accesses the master switch, it must increment a global access count.
+Since the switch is Singleton, the count should be shared across all players.
+
+Input Format:
 n
-[BookTitle1]
-[Author1]
-[BookTitle2]
-[Author2]
+[Player1]
+[Player2]
 ...
 
-Output:
-Books in Library:
-- [Title] by [Author]
+Output each line as:
+[PlayerName] accessed Master Power Switch. Total accesses so far: [count]
 
 
 ## AIM:
-To implement the concept of Composition in Java by creating a Library class that owns and manages Book objects. Books are created only inside the Library 
-and cannot exist independently.
+To implement the Singleton design pattern in Java to ensure only one instance ofthe master power switch exists, and to maintain a shared access counter that
+increments each time any player accesses the switch.
 
 
 ## ALGORITHM :
-1. Create a Book class with title and author as attributes, but make it usable 
-   only inside the Library (inner class or created from Library).
+1. Define a Singleton class MasterSwitch with a private instance and a private 
+   constructor to restrict object creation.
 
-2. Create a Library class that contains a list of Book objects.
+2. Provide a public static getInstance() method that returns the single instance 
+   of MasterSwitch (creates it only once).
 
-3. Provide a method in Library to add new Book objects using title and author.
+3. Inside the Singleton class, maintain a global access counter and increment it
+   each time a player accesses the switch through an access() method.
 
-4. In the main method, read 'n' number of books and use the Library's method to 
-   create and store Book objects.
+4. In the main program, read the number of players and their names, and obtain 
+   the same Singleton instance for each access.
 
-5. Finally, display all books stored inside the Library.
-
-
+5. For every player, call the access() method and print the player name along 
+   with the updated count.
 
 
 
 ## PROGRAM:
  ```
 /*
-Program to implement a Composition Concepts in Java
+Program to implement a SOLID Principles in Java Program
 Developed by: SUCHITRA NATH
 RegisterNumber: 212223220112
 */
@@ -52,50 +54,39 @@ RegisterNumber: 212223220112
 ```
 import java.util.*;
 
-public class CompositionExample {
+class MasterPowerSwitch {
+    private static MasterPowerSwitch instance = null;
+    private int accessCount = 0;
+
+    // Private constructor prevents new instance creation
+    private MasterPowerSwitch() {}
+
+    // Static method to get the only instance (Singleton)
+    public static MasterPowerSwitch getInstance() {
+        if (instance == null) {
+            instance = new MasterPowerSwitch();
+        }
+        return instance;
+    }
+
+    // Method to increment and return global access count
+    public int logAccess() {
+        accessCount++;
+        return accessCount;
+    }
+}
+
+public class prog {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Library library = new Library();
-
         int n = sc.nextInt();
         sc.nextLine();
 
         for (int i = 0; i < n; i++) {
-            String title = sc.nextLine();
-            String author = sc.nextLine();
-            library.addBook(title, author);
-        }
-
-        library.showBooks();
-        sc.close();
-    }
-}
-
-class Book {
-    private String title;
-    private String author;
-
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
-    }
-
-    public String getDetails() {
-        return title + " by " + author;
-    }
-}
-
-class Library {
-    private List<Book> books = new ArrayList<>();  // Library owns the books
-
-    public void addBook(String title, String author) {
-        books.add(new Book(title, author));  // Composition: Book created inside Library
-    }
-
-    public void showBooks() {
-        System.out.println("Books in Library:");
-        for (Book book : books) {
-            System.out.println("- " + book.getDetails());
+            String player = sc.nextLine();
+            MasterPowerSwitch power = MasterPowerSwitch.getInstance();
+            int count = power.logAccess();
+            System.out.println(player + " accessed Master Power Switch. Total accesses so far: " + count);
         }
     }
 }
@@ -108,15 +99,18 @@ class Library {
 
 
 
+
 ## OUTPUT:
-<img width="995" height="628" alt="image" src="https://github.com/user-attachments/assets/d7f39596-2115-4e2b-a387-087d825ba8a2" />
+<img width="1248" height="400" alt="image" src="https://github.com/user-attachments/assets/7f9bbd56-84d8-4fd6-b519-56a5513c752d" />
+
 
 
 
 ## RESULT:
-The program successfully demonstrates Composition in Java.
-All Book objects are created only inside the Library class and cannot exist independently. The library stores the list of books and displays them 
-as required.
+The program successfully demonstrates the Singleton design pattern.
+Only one MasterSwitch object is created, and every player access increases the
+shared global counter. The output displays the player names along with the
+updated number of total accesses.
 
-Thus, the Java program implementing Composition between Library and Book executed successfully.
+Thus, the Java program using Singleton with a global access counter is executed successfully.
 
